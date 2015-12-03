@@ -1,0 +1,16 @@
+All untrusted variables in a Node user interface should be properly encoded in the right context using the [secure-filters](https://www.npmjs.com/package/secure-filters) library.
+
+The secure-filters project provides an excellent cheatsheet to explain the various contexts that each require different encoding.
+
+![Secure-filters cheat sheet](https://raw.githubusercontent.com/SalesforceEng/secure-filters/d65a2e8651c3b966047a5faeba99f2d4c66c0fb7/images/secure-filters%20cheat%20sheet.png)
+
+Here is an example of secure-filters being used to defend against Cross-Site Scripting.
+
+```javascript
+var htmlEscape = require('secure-filters').html;
+var htmlContentEscaped = htmlEscape("{{{untrusted_data}}}");
+```
+
+**"htmlContentEscaped" is now safe to insert in the "html" content listed above**. This same pattern can be used to defend the css, jsObj, js, style, uri and jsAttr examples above.
+
+The secure-filters library can also be integrated into EJS templates and similar.

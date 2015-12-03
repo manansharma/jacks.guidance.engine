@@ -1,0 +1,13 @@
+Since the remote server does not offer an HTTPS connection, the safest way to use the script is to download it to your
+local server and source it in locally using a relative path.
+
+Since we can access the remote script directly, we can download this script for you and place it in a local directory
+within your project, then update the reference to that script in your view source to use the relative path instead of
+referencing the remote server.
+
+The script will be downloaded to `$PROJECT_ROOT/cache/{{{remote_domain}}}/{{{remote_filename}}}`
+
+The source that references the script will be updated to point to the relative directory of the script
+```html
+<script type="text/javascript" src="/cache/{{{remote_domain}}}/{{{remote_filename}}}"></script>
+```

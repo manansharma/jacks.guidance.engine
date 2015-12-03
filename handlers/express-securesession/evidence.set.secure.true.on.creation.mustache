@@ -1,0 +1,6 @@
+The attached patch modifies the way you are creating the session object by setting the *secure* attribute to *true*.
+```javascript
+var {{session_variable}} = require("express-session");
+
+{{app_variable}}.use({{session_variable}}({{{guidance_advice}}}));
+```

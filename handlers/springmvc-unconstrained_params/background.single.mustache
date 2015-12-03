@@ -1,0 +1,3 @@
+## Background
+
+We've identified that the `@InitBinder` method for `{{controllerClass}}` {{^hasInitBinder}}is not present{{/hasInitBinder}}{{#hasInitBinder}}does not presently constrain what parameters can be auto-bound{{/hasInitBinder}}. This means parameters passed on the Request to the `@RequestHandler` can override parameters that may not otherwise be exposed. As a result, an attacker could override parameter values that are not intended to be overridden (such as object id's or other sensitive fields) to alter program execution.

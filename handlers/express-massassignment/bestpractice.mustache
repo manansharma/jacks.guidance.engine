@@ -1,0 +1,50 @@
+We identified that you are using mass assignment functionality of MongoDB by sending untrusted input as a single object into the insert function on line {{line_number}}:
+```javascript
+{{{insert_function_code}}}
+```
+
+If the all documents in collection {{collection_name}} have the same structure, we recommend you create a schema for the document and only inject documents that follow that schema into the collection. If the documents have fields that must not be modified by users, you can mark those fields "protected."
+To create schema for your documents, import the *mongoose* npm package and create a schema for your collection {{collection_name}} similar to this sample:
+```javascript
+var mongoose = require('mongoose');
+
+var {{collection_name_first_letter_capitalized}}ModelSchema = new mongoose.Schema({
+    attribute1: String,
+    attribute2: String,
+    attribute3: String,
+    protectedAttribute: {
+        type: String,
+        protect: true,
+        default: "default_value"
+    }
+});
+
+{{collection_name_first_letter_capitalized}}Schema.plugin(massAssign);
+var {{collection_name_first_letter_capitalized}}Model= mongoose.model('{{collection_name_first_letter_capitalized}}Model',
+    {{collection_name_first_letter_capitalized}}ModelSchema,
+    '{{collection_name}}'
+);
+```
+
+Note that you can change the name of the model for the collection from *{{collection_name}}Model* to something else.
+To insert data securely, import the *mongoose-mass-assign* npm package. Then instead of using the MongoDB *insert()* method, create an instance of the model you defined and call the *massAssign()* method, specifying the attributes that need to be assigned.
+```javascript
+var object = new {{collection_name_first_letter_capitalized}}Model;
+object.massAssign({
+    attribute1: req.body.parameter1,
+    attribute2: req.body.parameter2,
+    attribute3: req.body.parameter3
+});
+user.save({{call_back_function_used_by_insert}});
+```
+
+If {{collection_name}} must store documents of different structures, you must still explicitly specify each field of the element as it is being inserted to prevent assigning parameters that the user should not have assess to.
+```javascript
+db.{{collection_name}}.insert({
+    attribute1: req.body.parameter1,
+    attribute2: req.body.parameter2,
+    attribute3: req.body.parameter3
+}, {{call_back_function_used_by_insert}});
+```
+
+However, this approach does not allow you to use protected attributes provided by Mongoose middleware.

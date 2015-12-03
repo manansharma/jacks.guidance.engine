@@ -1,0 +1,7 @@
+Since the *secure* attribute is not set to *true* by default, it needs to be enabled explicitly. The easiest way is to add it when the session cookie is created. The attached patch will modify your code to add secure: *true*.
+```javascript
+var {{session_variable}} = require("express-session");
+
+{{app_variable}}.use({{session_variable}}({{{guidance_advice}}}));
+```
+**Note**: If you have any part of the website that is served over HTTP and not HTTPS, the session cookie will not be available to that part of the website.

@@ -1,0 +1,8 @@
+#!/bin/sh
+node=$(which node)
+if [ -z $node ]; then
+    echo "No node binary found!"
+    exit 1
+fi
+
+$node index $1

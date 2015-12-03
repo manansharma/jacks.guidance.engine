@@ -1,0 +1,31 @@
+## Background
+
+Untrusted input passed to database functionality – such as MongoDB's <i>find()</i> – may lead to database injections. This is because <i>find()</i> can interpret arguments or operator arguments (for example, <i>$where:bad_input</i>) as JSON objects, commands sent to the MongoDB connector, or erroneous logic.
+This can result in problems such as denial of service, logic exploitation for security controls (for example, logging in as a user without proper authentication), database dumping, and privilege escalation.
+
+ 
+Let's look at some examples of how this can happen.
+ 
+In the following snippet, passing <i>$gt:""</i> as a username and password will result in an evaluation against an empty string. In this case, the resultant callback function may evaluate the "true" response to mean that the supplied credentials are valid.
+
+```javascript
+app.post('/', function (req, res) { db.users.find({username: req.body.username, password: req.body.password}, function (err, users) { 
+  // TODO: handle the rest 
+  }); 
+});
+```
+
+Special characters – for example, '. ", \, ;, {, }" – can also be passed to the function, as in the following example. In this case, a database error is triggered.
+
+```javascript
+db.myCollection.find( { active: true, $where: function() { return obj.credits - obj.debits < $userInput; } } );;
+```
+
+Alternatively, if the following argument is passed to the above function, the MongoDB instance would execute at 100% CPU usage for 10 seconds, resulting in a denial of service.
+
+```javascript
+"userInput = 0;var date=new Date(); do{curDate = new Date();}while(curDate-date<10000);"
+```
+
+
+To avoid database injections, construct queries from validated user input or hard-coded strings.

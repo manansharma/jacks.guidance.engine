@@ -1,0 +1,12 @@
+## Route Data
+```javascript
+{{{trace_route}}}
+```
+## Function Stack
+```javascript
+{{{trace_stack}}}
+```
+
+## Background
+
+Mass assignment is an important security issue in MongoDB. MongoDB allows the programmer to insert a document into a collection by inserting a single JSON object with all the model attributes using the *collection.insert()* function. If the code sends that one JSON object to the *insert()* function and that object contains untrusted data, it results in a mass assignment vulnerability. Attackers can leverage this vulnerability to insert values into attributes that they shouldn’t have access to.

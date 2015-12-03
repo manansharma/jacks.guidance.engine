@@ -1,0 +1,3 @@
+## Background
+
+We've noticed that you are not disabling the X-Powered-By HTTP header that Node applications send by default with each response. This header usually contains the name of the web server that is used by the application, like Tomcat Apache or IIS. In the case of using Node.js with Express, the X-Powered-By header will contain "Express". This information discloses the type of software running on the server, and may help attackers to craft more-targeted exploits against your application.

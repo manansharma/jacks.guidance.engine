@@ -1,0 +1,4 @@
+We've identified that you are explicitly setting the secure attribute to *false* in `{{call_to_secure_assignment}}` on line {{line_number}}, indicating you may be using the same session cookie for the HTTP and HTTPS parts of the website. Using the same session cookie on the HTTP part of the website makes the cookie extremely vulnerable to eavesdropping attacks. If you need to maintain session on HTTP and HTTPS parts of the website, use separate session objects and separate cookies. In general, it is a best practice to have the whole website served over HTTPS.
+```javascript
+{{{guidance_advice}}}
+```

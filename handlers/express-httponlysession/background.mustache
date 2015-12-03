@@ -1,0 +1,5 @@
+## Background
+
+The httpOnly attribute is a flag set as part of a Set-Cookie header to prevent that cookie’s value from being read or set by client-side JavaScript in modern browsers. Without the httpOnly attribute, the cookie's value can be accessed by client-side scripts like JavaScript.
+
+Failing to set the httpOnly flag on sensitive cookies may aid in the execution of certain attacks (such as cross-site scripting) that use JavaScript to obtain session identifiers and other sensitive information, and transmit it to a malicious third party. An attacker who can intercept a victim's session identifier can gain complete control of that user's session, allowing the attacker to access any information and perform any action with the victim’s privileges.

@@ -1,0 +1,7 @@
+The attached patch modifies the way you are creating the session object by setting the httpOnly attribute to true.
+```javascript
+var {{session_variable}} = require("express-session");
+
+{{app_variable}}.use({{session_variable}}({{{guidance_advice}}}));
+```
+**Note**: If you have any JavaScript code reading the session cookie on the client side, this code will stop working after our change. In general, it is a bad practice to manipulate the session cookie on the client side. If your code is doing so, consider modifying it.

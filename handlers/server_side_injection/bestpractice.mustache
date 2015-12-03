@@ -1,0 +1,23 @@
+The main way to defend against server-side includes is to NOT send untrusted data into the eval() or similar functions that lead to code execution. Existing code that is vulnerable to this issue needs to be re-written so that safer methods of validation or managing untrusted data is used.
+
+There is no reasonable way to send untrusted data into the eval(), setTimeout(), innerHTML assignments, any event handler, window.execScript(), function(), setInterval(), requestAnimationFrame(), script.src(), iframe.src(), document.write(), document.writeln() and any other code execution function or variable assignment that writes directly to the DOM.
+
+Since untrusted data can never be safely used in an "execution context" (like executing code or loading libraries), the safest way to execute code dynamically is from trusted sources of data only.
+
+Let's look at a more detailed example. In the following code, the programmer is using eval() to process untrusted data.
+```javascript
+var config = {
+    userdatabase: {
+        search_username: 'databaseImplementation.getUsername'
+    }
+};
+var username = req.params.username;
+var dbUsername = eval(config.userdatabase.search_username + '("' + username + '")');
+```
+
+This code is functional. The intention of this code is to allow the allow the user to authentication with the database in some way. However, since untrusted user data is being processed with eval, remove code execution is possible by including malicious JavaScript code to the username, which is untrusted and driven by the user.
+
+The fix is simple. Do not allow untrusted data to be sent into eval. Simple dropping the eval function will remove the SSI issue. It is also wise to encode the username so the user cannot break out of the quoted string.
+```javascript
+var dbUsername = config.userdatabase.search_username + '("' + encodeForJavascript(username) + '")');
+```

@@ -1,0 +1,8 @@
+## Background
+
+We've identified that some controllers within your application do not presently constrain what parameters can be auto-bound. This means parameters passed on the Request to the `@RequestHandler` can override parameters that may not otherwise be exposed. As a result, an attacker could override parameter values that are not intended to be overridden (such as object id's or other sensitive fields) to alter program execution.
+
+The following Controllers do not currently constrain what parameters can be auto-bound:
+{{#controllers}}
+   * {{{.}}}
+{{/controllers}}

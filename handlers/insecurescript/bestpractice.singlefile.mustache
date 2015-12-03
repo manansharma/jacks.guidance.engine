@@ -1,0 +1,17 @@
+We attempted to resolve this issue first by simply replacing all instances of http with https in the view, however we
+were unable to retrieve the scripts using the specified urls. This may be because the server is unavailable on the internet
+or we simply can't reach the server at this time due to some other error.
+
+If this server is in fact listening on https, you can simply replace all instances of http with https that reference the
+scripts listed below to ensure that your code is using the most secure means possible to source external javascript.
+
+If the remote server does not offer an HTTPS connection, the safest way to use the script is to download it to your
+local server, then source it in locally using a relative path.
+
+The following scripts in {{{filename}}} are currently using _http_ and are potentially vulnerable to a MiTM Attack:
+{{#scripts}}
+    * {{{.}}}
+{{/scripts}}
+
+These should be downloaded to your local project's directory. The reference to that script within your view source should
+be updated to use the relative path from your local server.

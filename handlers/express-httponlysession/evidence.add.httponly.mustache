@@ -1,0 +1,7 @@
+Since the httpOnly attribute is not set to true by default, it needs to be enabled explicitly. The easiest way is to add it when the session cookie is created. The attached patch will modify your code to add httpOnly: true.
+```javascript
+var {{session_variable}} = require("express-session");
+
+{{app_variable}}.use({{session_variable}}({{{guidance_advice}}}));
+```
+**Note**: If you have any JavaScript code reading the session cookie on the client side, this code will stop working after enabling httpOnly. In general, it is a bad practice to manipulate the session cookie on the client side. If your code is doing so, consider modifying it.

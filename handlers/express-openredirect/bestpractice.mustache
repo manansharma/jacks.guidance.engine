@@ -1,0 +1,47 @@
+We've identified that you are using untrusted input on line {{line_number}} to create a redirection URL:
+
+**Vulnerable code**
+```javascript
+{{{untrusted_redirect_code}}}
+```
+Using untrusted input when redirecting a user to another page may result in an open redirect vulnerability, which attackers can exploit to perform phishing attacks.
+
+There are several ways to securely use user-submitted data in redirects.
+1. **URL Mapping**. Use mapping when no real URL is needed from the user. If all redirects in the application are to known URLs, then users do not need to submit the actual URLs. Instead, a value (such as "confirm," "logout," or "partner_site") can define where the application should redirect the user. In the application, create a mapping (array) of hard-coded URLs and their keys. Use the hard-coded URLs when passing them to the res.redirect() function. Have a default URL in case the submitted value does not exist in the mapping.
+    ```javascript
+    urlMap = {
+        "home": "http://mysite.com/",
+        "confirm": "http://mysite.com/confirmation/",
+        "logout": "http://mysite.com/logout",
+        "partner1": "http://partner1.com/"
+    }
+
+    var url = urlMap[res.param.url];
+    if (url !== undefined) {
+        res.redirect(url);
+    } else {
+        res.redirect(urlMap["home"]);
+    }
+    ```
+
+2. **Prepending Protocol and Host**. Use the path from the user and prepend it with the protocol and host from the response. If redirection occurs only within the application, have the user pass only the path of the page or relative URL. Then have the application prepend the relative URL with hard-coded protocol and the current domain.
+    ```javascript
+    app.locals.url = req.body.url;
+    var url = app.locals.url;
+
+    res.redirect(302, 'https://' + req.host + '/' + url);
+    ```
+
+3. **Whitelist of Allowed Domains**. When external URLs are submitted from the user, create a whitelist of allowed domains and verify that the submitted URL is listed in it.
+    ```javascript
+    var urlsWhiteList = ["www.facebook.com", "www.twitter.com", "www.instagram.com"];
+
+    var url = req.params.redirect;
+    parser.href = url;
+
+    if (urlsWhiteList.indexOf(parser.hostname) !== -1) {
+        res.redirect(url);
+    } else {
+        res.redirect(homePage);
+    }
+    ```

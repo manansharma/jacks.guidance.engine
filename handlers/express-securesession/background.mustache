@@ -1,0 +1,5 @@
+## Background
+
+The secure attribute helps prevent cookies from being stolen by attackers on the same LAN as victims. If the secure attribute is set to *true* on a cookie, modern browsers will send it only over HTTPS connections (and not over HTTP). If *secure* is not set or is set to *false*, the cookie will be sent to the vulnerable site along with all HTTP requests to that site. An attacker can then sniff traffic between the victim and the server and steal the cookies.
+
+The *secure* attribute needs to be set to *true* even if the vulnerable site serves content only over HTTPS and does not listen for HTTP traffic. If a site is available only over HTTPS, an attacker can still trick a user into sending a request to the site over HTTP. Even though the request will not be redirected to HTTPS when it reaches the server, the cookie will still be sent along with the original HTTP request, and an attacker on the same LAN as the victim can steal the cookie during the transfer.

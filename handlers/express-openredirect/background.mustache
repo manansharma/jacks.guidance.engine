@@ -1,0 +1,24 @@
+## Route Data
+```javascript
+{{{trace_route}}}
+```
+## Function Stack
+```javascript
+{{{trace_stack}}}
+```
+
+## Background
+
+*Node.js* can send redirect responses to the browser and thus navigate users away from the current page to a different URL. If that URL comes from untrusted input (for example, GET parameters), that means users may be redirected to a malicious site. This vulnerability is known as open redirect.
+
+Let's look at a simple example. An application page takes a URL from a query string parameter:
+```
+http://www.example.com/redirect?next_page=http%3a%2f%2fwww.attacker.com%2fhome%2f
+```
+This query string parameter is set by an attacker, who sends the full URL to the victim user in a phishing email. The user clicks on the link, thinking that it came from the trusted site www.example.com. However, later the victim is redirected to the next page. The application uses the URL originally created by the attacker to get the next_page parameter and store it. Then the application takes next_page or its value stored in the session or other object, and issues an HTTP 302 response back to the user's browser, which redirects them to the requested site:
+```
+HTTP/1.1 302 Found
+...
+Location: http://www.attacker.com/home/
+```
+The application issues the redirect to the attacker's malicious URL, since there are no controls in place to limit where the application sends the user. The victim, believing they are still on the trusted site, can then be tricked into providing sensitive information to the malicious site.

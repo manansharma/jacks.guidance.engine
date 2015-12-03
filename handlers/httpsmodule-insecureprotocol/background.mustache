@@ -1,0 +1,4 @@
+## Background
+The NodeJS *https* module allows you to create and configure an HTTPS-enabled web server. The *options* object passed to the *createServer()* function may contain different settings, such as path to the SSL certificate (*cert*), path to the certificate key (*key*), certificates of CAs (*ca*), and type of protocol to be used (*secureProtocol*). If the *secureProtocol* setting is not set, by default HTTPS server will use the *'SSLv23_method'*. The *'SSLv23_method'* will try to automatically negotiate from the highest level down to whatever the client supports, except for SSLv2 and SSLv3 that are vulnerable to many known attacks.
+
+Explicitly setting the secureProtocol attribute to *'SSLv2_method'* or *'SSLv3_method'* makes your HTTPS server vulnerable to various attacks (for example, length extension attacks due to weak MAC construction that uses the MD5 hash function or man-in-the-middle downgrade attack with *SSLv2*, or the POODLE attack with SSLv3).

@@ -1,0 +1,44 @@
+When referencing a path on your filesystem that may include untrusted data, the safest approach to reducing risk is to simply not use the untrusted data. However, that isn't always possible.
+
+Depending on the business requirements surrounding the code, there are several approaches to ensure your code isn't vulnerable to a path traversal attack. In either approach, you are removing an attacker's ability to inject control characters that will allow them to traverse your filesystem.
+
+**1. Use an indirect object reference map based on user input to build your path from trusted data.**
+
+This approach anticipates that a finite number of choices can either be declared or calculated by the program prior to building the path. Instead of allowing free-form text to build the path, the user is presented with a series of options they could select from (or the choice could be passed on from previous requests to the application based on the context of what you need to do). That choice would map to a "known-good" path.
+
+```javascript
+var options = [ "jack", "chris", "john" ]
+
+function getUsernameForID(id) {
+var num = parseInt(id);
+if (num == NaN || num < 0 || num >= options.length) {
+throw "Invalid ID"
+}
+return options[num];
+}
+
+app.get('/home/:id', function(req, res) {
+// If the ID is invalid, the error response will be triggered by getUsernameForID throwing an error
+var userhome = path.join(__dirname, Constants.HOME_DIR, getUsernameForID(req.params.id));
+// ... Continue processing the request, assured the path is valid
+});
+```
+
+**2. Validate the untrusted data prior to building the path.**
+
+In this approach, you specify that only a certain subset of characters are available to build the path from untrusted input. You then apply a pattern to ensure that the specification is met prior to building the path. The benefit to using validation is that you only need to know what format constitutes valid data (as opposed to knowing what all the valid choices are).
+
+```javascript
+app.get('/home/:username', function(req, res) {
+var username = req.params.username;
+
+// Valid username contains Alpha-Numeric characters, is at least 3 characters long but less than 16
+var re = /^[A-Za-z0-9]{3,16}$/g;
+
+if (re.test(username)) {
+res.send('Your home directory is located at: ' + getUserHomeDirectory(username));
+} else {
+res.send('Invalid username');
+}
+});
+```

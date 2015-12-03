@@ -1,0 +1,8 @@
+Since the remote servers listed below do not offer HTTPS connections, the safest way to use these scripts is to download
+them to your local server, then source them in locally using relative paths. The following views contain references to
+insecure scripts that are not accessible using the HTTPS protocol.
+
+This patch will download the remote scripts to your local project directory, and update the references to them in your
+project to use a relative path on your local server instead of the remote server.
+
+Scripts will be downloaded to `$PROJECT_ROOT/cache/$REMOTE_DOMAIN/$REMOTE_FILE.js`

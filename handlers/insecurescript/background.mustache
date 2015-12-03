@@ -1,0 +1,15 @@
+## Background
+
+We've identified that you are sourcing JavaScript files from an external server, and those servers do not offer the option to access the scripts using the _https_ protocol. The _http_ protocol is vulnerable to a "man-in-the-middle" (or MiTM) attack, which allows an attacker to take complete control of a connection. Once they have control of the connection, they cannot only monitor both the request and response, but they can also change anything in both, including injecting their own custom scripts into a webpage in real time.
+
+There are many ways an attacker can take control of connections that transmit data over plaintext channels. The best defense against this type of attack is to use an encrypted channel. For example:
+
+```html
+    <script type="text/javascript" src="http://example.com/scripts/script.js"></script>
+```
+
+would become
+
+```html
+    <script type="text/javascript" src="/scripts/example.com/script.js"></script>
+```

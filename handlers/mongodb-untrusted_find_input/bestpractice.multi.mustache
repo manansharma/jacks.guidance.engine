@@ -1,0 +1,6 @@
+Input validation for untrusted input can be performed in a number of different ways.
+
+* <b>Validation Against Non-JSON Objects.</b> The jQuery method <i>isSimpleObject()</i> returns "<i>true</i>" if the supplied input is a JSON object. The <i>jquery</i> package can be added to Node.js as a server-side package with npm.
+* <b>Validation of JSON Schema.</b> Schema validation for json input can be used to ensure proper structure should input require. The bedrock package can be added to Node.js as a server-side package with npm.
+* <b>Validation Against Special Mongo Operators (for example, $gt, $ne).</b> The <i>mongo-sanitize</i> npm package can be used to detect $-sign directives and remove them from user input. This package can be added to Node.js as a server-side package with npm.
+* <b>Validation of Common Data Types.</b> For other common types of data, the validator npm package can be added to Node.js as a server-side package with npm. The <i>validator</i> package contains commonly used types such as <i>isDate()</i>, <i>isEmail()</i>, and <i>isCreditCard()</i>.

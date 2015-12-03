@@ -1,0 +1,19 @@
+We've identified that you are setting the *secureProtocol* attribute in the *agentOptions* of the request *options* object or in the request *options* object itself to {{{insecure_protocol}}}. This makes your application vulnerable to different SSL attacks, such as POODLE or man-in-the-middle downgrade.
+
+We've created a patch that will configure your HTTPS server securely and that specifically prohibits the use of SSLv2 and SSLv3. The *'SSLv23_method'* setting for *secureProtocol* means that the HTTPS server will negotiate from the highest level of protocol down to whatever the client supports. The *secureOptions* setting ensures that SSLv3 and SSLv2 are not used by the server.
+
+Note that it is recommended to use agentOptions field to set HTTPS options of the request to keep the logic of the application clear.
+
+**Secure HTTPS Configuration in AgentOptions**
+```javascript
+var {{{options_objectName}}} = {
+...
+agentOptions: {
+...
+secureProtocol: 'SSLv23_method',
+secureOptions: constants.SSL_OP_NO_SSLv3 | constants.SSL_OP_NO_SSLv2
+}
+}
+```
+
+Note that this secure solution forces clients and the server to use TLS, which is supported by all contemporary browsers.

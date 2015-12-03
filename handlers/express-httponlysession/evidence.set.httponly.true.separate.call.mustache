@@ -1,0 +1,8 @@
+Not having httpOnly is a vulnerability. Manipulating the session cookie with client-side JS is a bad practice because it doesn't allow developers to set httpOnly to true (as it breaks the code).
+
+We've identified that you are explicitly setting httpOnly to false on line {{line_number}}, indicating you may be manipulating your session cookie with the client-side JavaScript. In general, this is a bad practice because it opens your code to cross-site scripting attacks. Consider modifying your client-side code. In the meantime, we've provided a patch that updates the value of the httpOnly attribute to true.
+```javascript
+{{{guidance_advice}}}
+```
+
+**Note**: This change may make your client-side code not function properly if you haven't yet removed calls to the session cookie from it.

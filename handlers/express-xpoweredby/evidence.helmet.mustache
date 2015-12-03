@@ -1,0 +1,5 @@
+We also determined that you are using helmet package, which has a built-in function for disabling the X-Powered-By header. All we need to do is to add the following code to your main application file:
+
+```javascript
+app.use({{helmet}}.hidePoweredBy());
+```

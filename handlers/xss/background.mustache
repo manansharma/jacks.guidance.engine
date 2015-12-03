@@ -1,0 +1,19 @@
+## Route Data
+```javascript
+{{{trace_route}}}
+```
+
+
+## Function Stack
+```javascript
+{{{trace_stack}}}
+```
+## Background
+
+Cross-site Scripting attacks are successful when a web application uses input from a user and then outputs that data -- without validating or encoding it -- to another user. A good example of this is a site search engine: when you enter a search string, that search string will typically be redisplayed verbatim on the results page, along with the results. If the search site doesn’t properly escape the HTML control characters, a vulnerability is created.
+
+The most common type of XSS attack is reflected, or non-persistent. A reflected attack is typically delivered via email or a neutral web site. The bait is an innocent-looking URL that points to a trusted site, but also contains the malicious script. When a user clicks the link, the injected code travels to the vulnerable web site, which then reflects the attack back to the victim's browser. The victim's browser, thinking it comes from a trusted site, executes the injected script.
+
+Anita is logged into the web site where she manages her stock portfolio. Meanwhile, she receives an email from Leland that pretends to offer a free trial subscription to the Wall Street Journal for users who click the URL.
+
+But when Anita clicks the URL, it's actually a URL to her stock portfolio website that includes a malicious script that executes in her browser, stealing sensitive information about her stock portfolio and sending it to Leland without her knowledge. This is a reflected XSS attack.

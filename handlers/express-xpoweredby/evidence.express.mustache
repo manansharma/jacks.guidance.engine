@@ -1,0 +1,19 @@
+One of the easiest way to disable the X-Powered-By header is by using functionality of the helmet package. The helmet package contains many other useful security-related features, like enabling HTTP Strict Transport Security or preventing clickjacking attacks.
+
+To install the helmet package, type in your command line:
+```shell
+npm install helmet
+```
+
+Then add the following code to your main application file:
+```javascript
+var helmet = require('helmet');
+app.use(helmet.hidePoweredBy());
+```
+
+If you decide not to use the helmet package, you can still disable the X-Powered-By header by using an Express command:
+```javascript
+app.disable('X-Powered-By');
+```
+
+<b>Important!</b> Overwriting the X-Powered-By header in a response is not a secure solution, because responses to other requests (such as downloading resources like JavaScript files or images) will still contain the 'X-Powered-By: Express' header, revealing the server-side software.

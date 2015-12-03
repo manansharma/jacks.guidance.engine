@@ -1,0 +1,7 @@
+Contextual output encoding is the primary defense against XSS. It's a programming technique that converts display data from potentially dangerous code to inert display data. It is contextual because the encoding occurs in a variety of contexts, based on where data lands in the user interface. The most common types of encoding includes HTML encoding, HTML Attribute encoding, JavaScript Hex Encoding, CSS Hex Encoding, and URL Encoding. These functions are best used in the user interface section of your application code.
+
+The primary library that provides output encoding functionality for Node.JS applications is the secure-filters https://www.npmjs.com/package/secure-filters library.
+
+Secure-filters provides output encoding functionality including html, js, jsObj, jsAttr, uri, css and style encoding (which secure filters calls "sanitization").
+
+All of these encoding functions should be used in the user interface portion of the application - using the function for the right context - as data is dynamically added to your UI.

@@ -1,0 +1,19 @@
+## Route Data
+```javascript
+{{{trace_route}}}
+```
+## Function Stack
+```javascript
+{{{trace_stack}}}
+```
+
+## Background
+
+*Server Side Includes* (SSI) occurs when an attacker injects malicious JavaScript into a server side application that uses a JavaScript parser. This results in malicious JavaScript code executing on the server.
+
+SSI occurs primarily when untrusted input lands in the JavaScript "eval" function on the server. The eval() function is especially dangerous because if will decode and execute any input sent to it. Traditional defense such as encoding or validation are often ineffective at stopping this issue.
+
+The basic vulnerability pattern looks like the following on line {{line_number}}:
+```javascript
+{{{injection_code}}}
+```

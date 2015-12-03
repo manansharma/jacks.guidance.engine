@@ -1,0 +1,6 @@
+{
+  "logging": {
+    "name": "jacks.guidance.engine",
+    "level": "debug"
+  }
+}

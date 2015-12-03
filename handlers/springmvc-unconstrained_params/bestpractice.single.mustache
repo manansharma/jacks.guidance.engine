@@ -1,0 +1,11 @@
+When constraining which parameters are allowed to be auto-bound to parameters in a controller, it is safer to whitelist allowed parameters than it is to blacklist restricted ones.
+When using a blacklist, you must update it whenever changes are made to code (upstream or downstream) to ensure any new dangerous parameters are included on the blacklist and thus disallowed. Failure to do so may allow sensitive or protected values to be overwritten. Whitelisting protects against this by disallowing any parameter that hasn't been specified as safe in the list.
+
+Consider {{^hasInitBinder}}adding a{{/hasInitBinder}}{{#hasInitBinder}}updating your{{/hasInitBinder}} method to whitelist which parameters should be allowed.
+
+```java
+@InitBinder
+public void constrainParameters(WebDataBinder dataBinder) {
+    dataBinder.setAllowedParameters( "param1", "param2" );
+}
+```
